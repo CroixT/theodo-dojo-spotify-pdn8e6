@@ -1,7 +1,9 @@
 import logo from './assets/logo.svg';
 import './App.css';
 import { useState } from 'react';
-const [trackIndex, setTrackIndex] = useState(0)
+import { fetchTracks } from './lib/fetchTracks';
+import { useQuery } from '@tanstack/react-query';
+
 const trackUrls = [
   'https://p.scdn.co/mp3-preview/742294f35af9390e799dd96c633788410a332e52',
   'https://p.scdn.co/mp3-preview/5a12483aa3b51331aba663131dbac967ccb33d99',
@@ -10,11 +12,16 @@ const trackUrls = [
   'https://p.scdn.co/mp3-preview/ac28d1b0be285ed3bfd8e9fa5fad133776d7cf36',
 ];
 
-const goToNextTrack = () => {
-  setTrackIndex(trackIndex + 1);
-}
 
 const App = () => {
+  const { data: tracks } = useQuery({
+		queryKey: ['tracks'],
+		queryFn: fetchTracks
+});
+  const [trackIndex, setTrackIndex] = useState(0)
+  const goToNextTrack = () => {
+    setTrackIndex(trackIndex + 1);
+  }
   return (
     <div className="App">
       <header className="App-header">
