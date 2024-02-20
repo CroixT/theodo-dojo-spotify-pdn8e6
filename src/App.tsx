@@ -3,6 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import { fetchTracks } from './lib/fetchTracks';
 import { useQuery } from '@tanstack/react-query';
+import { SavedTrack } from 'spotify-types';
 
 const trackUrls = [
   'https://p.scdn.co/mp3-preview/742294f35af9390e799dd96c633788410a332e52',
@@ -14,10 +15,16 @@ const trackUrls = [
 
 
 const App = () => {
+  
   const { data: tracks } = useQuery({
 		queryKey: ['tracks'],
 		queryFn: fetchTracks
 });
+  var snbtrack = '0';
+  console.log(tracks)
+  if (tracks != undefined){
+    const nbtrack = tracks.length
+    snbtrack = nbtrack.toString();
   const [trackIndex, setTrackIndex] = useState(0)
   const goToNextTrack = () => {
     setTrackIndex(trackIndex + 1);
@@ -36,8 +43,13 @@ const App = () => {
       <button onClick={goToNextTrack}>
         Next track
       </button>
+      <p>Il y a {snbtrack} musiques et la musique jouée est {tracks[trackIndex]?.track.name}</p>
     </div>
   );
+  }
+  else{
+    <p>Is loging</p>
+  }
 };
 
 export default App;
