@@ -48,7 +48,7 @@ const App = () => {
   );
   }
   else{
-    <p>Is loging</p>
+    <p>Is loading</p>
   }
 };
 
